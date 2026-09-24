@@ -1,6 +1,7 @@
 package com.studymate.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,33 +22,22 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-data class SubjectCardData(
-    val title: String,
-    val emoji: String,
-    val color: Color
-)
+import com.studymate.app.data.ContentRepository
+import com.studymate.app.data.Subject
 
 @Composable
-fun DashboardScreen() {
-    val subjects = listOf(
-        SubjectCardData("Python", "🐍", Color(0xFF7EB8E8)),
-        SubjectCardData("Algebra", "📐", Color(0xFFFF8A80)),
-        SubjectCardData("Geometry", "🔺", Color(0xFFA8E6CF)),
-        SubjectCardData("Physics", "⚛️", Color(0xFFFFD93D)),
-        SubjectCardData("Chemistry", "🧪", Color(0xFFB8A8E8)),
-        SubjectCardData("Biology", "🧬", Color(0xFFA8E8C8)),
-        SubjectCardData("English", "📖", Color(0xFFFFA8C8)),
-        SubjectCardData("Hindi", "✍️", Color(0xFFFFC8A8)),
-        SubjectCardData("GK", "🌍", Color(0xFFA8D8E8)),
-        SubjectCardData("Coding", "💻", Color(0xFFE8A8C8))
-    )
+fun DashboardScreen(onDebugTap: () -> Unit = {}) {
+    var tapCount by remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -57,14 +47,18 @@ fun DashboardScreen() {
     ) {
         Spacer(Modifier.height(24.dp))
 
-        // Welcome header
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
                     .size(60.dp)
                     .background(Color(0xFF7EB8E8), CircleShape)
+                    .clickable {
+                        tapCount++
+                        if (tapCount >= 7) {
+                            tapCount = 0
+                            onDebugTap()
+                        }
+                    }
             )
             Spacer(Modifier.size(12.dp))
             Column {
@@ -100,7 +94,7 @@ fun DashboardScreen() {
             contentPadding = PaddingValues(bottom = 24.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            items(subjects) { subject ->
+            items(ContentRepository.subjects) { subject ->
                 SubjectTile(subject)
             }
         }
@@ -108,7 +102,7 @@ fun DashboardScreen() {
 }
 
 @Composable
-private fun SubjectTile(subject: SubjectCardData) {
+private fun SubjectTile(subject: Subject) {
     Card(
         colors = CardDefaults.cardColors(containerColor = subject.color),
         shape = RoundedCornerShape(20.dp),
@@ -122,12 +116,9 @@ private fun SubjectTile(subject: SubjectCardData) {
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            Text(text = subject.emoji, fontSize = 32.sp)
             Text(
-                text = subject.emoji,
-                fontSize = 32.sp
-            )
-            Text(
-                text = subject.title,
+                text = subject.name,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
