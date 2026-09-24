@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Left ear -->
+    <path
+        android:fillColor="#7EB8E8"
+        android:pathData="M38,38 L46,26 L54,38 Z" />
+
+    <!-- Right ear -->
+    <path
+        android:fillColor="#7EB8E8"
+        android:pathData="M54,38 L62,26 L70,38 Z" />
+
+    <!-- Face (blue circle) -->
+    <path
+        android:fillColor="#7EB8E8"
+        android:pathData="M54,54 m-20,0 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0" />
+
+    <!-- Left eye -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M47,50 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M47,50 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+
+    <!-- Right eye -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M61,50 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M61,50 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+
+    <!-- Nose -->
+    <path
+        android:fillColor="#FF8A80"
+        android:pathData="M54,58 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+
+    <!-- Red puffer jacket collar -->
+    <path
+        android:fillColor="#FF4D4D"
+        android:pathData="M36,68 Q54,78 72,68 L72,80 Q54,90 36,80 Z" />
+</vector>
