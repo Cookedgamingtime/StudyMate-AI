@@ -11,10 +11,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.concurrent.TimeUnit
 
-/**
- * AiTutorHelper — Gemini API se baat karta hai.
- * Zig ki awaaz mein response deta hai.
- */
 object AiTutorHelper {
 
     private val client = OkHttpClient.Builder()
@@ -52,7 +48,7 @@ object AiTutorHelper {
             add("contents", contents)
         }
 
-        val url = "${AiConfig.BASE_URL}/models/${AiConfig.MODEL}:generateContent?key=${AiConfig.API_KEY}"
+        val url = AiConfig.BASE_URL + "/models/" + AiConfig.MODEL + ":generateContent?key=" + AiConfig.API_KEY
 
         val request = Request.Builder()
             .url(url)
@@ -64,8 +60,8 @@ object AiTutorHelper {
             client.newCall(request).execute().use { response ->
                 val body = response.body?.string() ?: ""
                 if (!response.isSuccessful) {
-                    DebugHelper.error("Gemini API error: ${response.code} $body")
-                    return@withContext "Beta, kuch problem aa gayi. Try again. (${response.code})"
+                    DebugHelper.error("Gemini API error: " + response.code)
+                    return@withContext "Beta, kuch problem aa gayi. Try again."
                 }
 
                 val json = gson.fromJson(body, JsonObject::class.java)
@@ -82,7 +78,7 @@ object AiTutorHelper {
                 return@withContext "Empty response from AI."
             }
         } catch (e: Exception) {
-            DebugHelper.error("AiTutorHelper error: ${e.message}", e)
+            DebugHelper.error("AiTutorHelper error: " + e.message)
             return@withContext "Beta, connection issue. Thoda baad try karein."
         }
     }
