@@ -1,6 +1,7 @@
 package com.studymate.app.logic
 
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,8 +12,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.concurrent.TimeUnit
 
 /**
- * AiTutorHelper — DeepSeek API se baat karta hai.
- * Zig/Momo ki awaaz mein response deta hai.
+ * AiTutorHelper — Gemini API se baat karta hai.
+ * Zig ki awaaz mein response deta hai.
  */
 object AiTutorHelper {
 
@@ -24,12 +25,6 @@ object AiTutorHelper {
 
     private val gson = Gson()
 
-    /**
-     * AI se ek response lo.
-     * @param userMessage User ka message
-     * @param language "hi" ya "en"
-     * @return AI ka reply (text)
-     */
     suspend fun ask(
         userMessage: String,
         language: String = "hi"
@@ -41,31 +36,26 @@ object AiTutorHelper {
             "Respond in simple English."
         }
 
+        val fullPrompt = AiConfig.SYSTEM_PROMPT + "\n\n" + langInstruction + "\n\nStudent: " + userMessage
+
         val bodyJson = JsonObject().apply {
-            addProperty("model", AiConfig.MODEL)
-
-            val messages = com.google.gson.JsonArray()
-
-            val systemMsg = JsonObject().apply {
-                addProperty("role", "system")
-                addProperty("content", AiConfig.SYSTEM_PROMPT + "\n" + langInstruction)
+            val contents = JsonArray()
+            val contentObj = JsonObject().apply {
+                val parts = JsonArray()
+                val partObj = JsonObject().apply {
+                    addProperty("text", fullPrompt)
+                }
+                parts.add(partObj)
+                add("parts", parts)
             }
-            messages.add(systemMsg)
-
-            val userMsg = JsonObject().apply {
-                addProperty("role", "user")
-                addProperty("content", userMessage)
-            }
-            messages.add(userMsg)
-
-            add("messages", messages)
-            addProperty("temperature", 0.7)
-            addProperty("max_tokens", 800)
+            contents.add(contentObj)
+            add("contents", contents)
         }
 
+        val url = "${AiConfig.BASE_URL}/models/${AiConfig.MODEL}:generateContent?key=${AiConfig.API_KEY}"
+
         val request = Request.Builder()
-            .url(AiConfig.BASE_URL + AiConfig.CHAT_ENDPOINT)
-            .addHeader("Authorization", "Bearer ${AiConfig.API_KEY}")
+            .url(url)
             .addHeader("Content-Type", "application/json")
             .post(bodyJson.toString().toRequestBody("application/json".toMediaType()))
             .build()
@@ -74,19 +64,26 @@ object AiTutorHelper {
             client.newCall(request).execute().use { response ->
                 val body = response.body?.string() ?: ""
                 if (!response.isSuccessful) {
-                    return@withContext "Kuch problem aa gayi. Try again: ${response.code}"
+                    DebugHelper.error("Gemini API error: ${response.code} $body")
+                    return@withContext "Beta, kuch problem aa gayi. Try again. (${response.code})"
                 }
 
                 val json = gson.fromJson(body, JsonObject::class.java)
-                val choices = json.getAsJsonArray("choices")
-                if (choices != null && choices.size() > 0) {
-                    val message = choices[0].asJsonObject.getAsJsonObject("message")
-                    return@withContext message.get("content").asString
+                val candidates = json.getAsJsonArray("candidates")
+                if (candidates != null && candidates.size() > 0) {
+                    val candidate = candidates[0].asJsonObject
+                    val content = candidate.getAsJsonObject("content")
+                    val parts = content.getAsJsonArray("parts")
+                    if (parts != null && parts.size() > 0) {
+                        val text = parts[0].asJsonObject.get("text").asString
+                        return@withContext text
+                    }
                 }
                 return@withContext "Empty response from AI."
             }
         } catch (e: Exception) {
-            return@withContext "Beta, connection issue. Thoda baad try karein. (${e.message})"
+            DebugHelper.error("AiTutorHelper error: ${e.message}", e)
+            return@withContext "Beta, connection issue. Thoda baad try karein."
         }
     }
 }
