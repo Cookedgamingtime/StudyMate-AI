@@ -1,30 +1,17 @@
 package com.studymate.app.logic
 
 /**
- * AiConfig — DeepSeek API configuration.
- *
- * IMPORTANT:
- * 1. Go to https://platform.deepseek.com
- * 2. Sign up (free)
- * 3. Generate API key
- * 4. Paste the key below
- *
- * For now, use a placeholder. We'll wire it properly later.
- * In production, store the key securely (not in code).
+ * AiConfig — Gemini API configuration.
  */
 object AiConfig {
 
-    // TODO: Replace with your actual DeepSeek API key
-    const val API_KEY: String = "PASTE_YOUR_DEEPSEEK_API_KEY_HERE"
+    // Replace with your actual Gemini API key
+    const val API_KEY: String = "PASTE_YOUR_GEMINI_API_KEY_HERE"
 
-    const val BASE_URL: String = "https://api.deepseek.com"
+    const val BASE_URL: String = "https://generativelanguage.googleapis.com/v1beta"
 
-    const val CHAT_ENDPOINT: String = "/chat/completions"
+    const val MODEL: String = "gemini-2.0-flash"
 
-    // Model
-    const val MODEL: String = "deepseek-chat"
-
-    // System prompt — Zig/Momo ki personality
     const val SYSTEM_PROMPT: String = """
 You are Zig, a warm and patient tutor for Class 8-12 Indian students.
 
