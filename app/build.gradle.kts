@@ -14,6 +14,16 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        
+        // Read API key from local.properties
+        def localProperties = new Properties()
+        def localPropertiesFile = rootProject.file('local.properties')
+        if (localPropertiesFile.exists()) {
+            localProperties.load(localPropertiesFile.newDataInputStream())
+        }
+        
+        buildConfigField "String", "GEMINI_API_KEY", 
+            "\"${localProperties.getProperty('GEMINI_API_KEY', 'NOT_SET')}\""
     }
 
     buildTypes {
@@ -56,7 +66,7 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
-    // Networking (DeepSeek API)
+    // Networking (Gemini API)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.google.code.gson:gson:2.11.0")
