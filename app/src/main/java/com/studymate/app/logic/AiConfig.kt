@@ -1,18 +1,18 @@
 package com.studymate.app.logic
 
+import com.studymate.app.BuildConfig
+
 /**
- * AiConfig - Gemini API configuration
- * API_KEY is loaded from BuildConfig.GEMINI_API_KEY (set via local.properties)
+ * AiConfig - Gemini API configuration.
+ * The key comes from local.properties or the GEMINI_API_KEY env var at build time.
  */
 object AiConfig {
-    // Read from local.properties at build time
-    // Never commit your real API key to git!
-    const val API_KEY: String = BuildConfig.GEMINI_API_KEY
-    
+    val API_KEY: String get() = BuildConfig.GEMINI_API_KEY
+
     const val BASE_URL: String = "https://generativelanguage.googleapis.com/v1beta"
-    
+
     const val MODEL: String = "gemini-2.0-flash"
-    
+
     const val SYSTEM_PROMPT: String = """
 You are Zig, a warm and patient tutor for Class 8-12 Indian students.
 
