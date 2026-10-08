@@ -4,45 +4,40 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-
-    <!-- Left ear -->
-    <path
-        android:fillColor="#7EB8E8"
-        android:pathData="M38,38 L46,26 L54,38 Z" />
-
-    <!-- Right ear -->
-    <path
-        android:fillColor="#7EB8E8"
-        android:pathData="M54,38 L62,26 L70,38 Z" />
-
-    <!-- Face (blue circle) -->
-    <path
-        android:fillColor="#7EB8E8"
-        android:pathData="M54,54 m-20,0 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0" />
-
-    <!-- Left eye -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M47,50 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
-    <path
-        android:fillColor="#1A1A1A"
-        android:pathData="M47,50 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
-
-    <!-- Right eye -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M61,50 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
-    <path
-        android:fillColor="#1A1A1A"
-        android:pathData="M61,50 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
-
-    <!-- Nose -->
-    <path
-        android:fillColor="#FF8A80"
-        android:pathData="M54,58 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
-
-    <!-- Red puffer jacket collar -->
     <path
         android:fillColor="#FF4D4D"
-        android:pathData="M36,68 Q54,78 72,68 L72,80 Q54,90 36,80 Z" />
+        android:pathData="M34,74 Q34,66 42,66 L66,66 Q74,66 74,74 L74,80 Q74,86 66,86 L42,86 Q34,86 34,80 Z" />
+    <path
+        android:fillColor="#5A9BD4"
+        android:pathData="M33,41 L36,26 L48,32 Z" />
+    <path
+        android:fillColor="#5A9BD4"
+        android:pathData="M75,41 L72,26 L60,32 Z" />
+    <path
+        android:fillColor="#7EB8E8"
+        android:pathData="M54,48 m-22,0 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0" />
+    <path
+        android:fillColor="#E8F4FD"
+        android:pathData="M54,57 m-9,0 a9,6 0 1,0 18,0 a9,6 0 1,0 -18,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M46,47 m-4.4,0 a4.4,4.4 0 1,0 8.8,0 a4.4,4.4 0 1,0 -8.8,0" />
+    <path
+        android:fillColor="#3A2E28"
+        android:pathData="M46.6,47.6 m-2.6,0 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M62,47 m-4.4,0 a4.4,4.4 0 1,0 8.8,0 a4.4,4.4 0 1,0 -8.8,0" />
+    <path
+        android:fillColor="#3A2E28"
+        android:pathData="M62.6,47.6 m-2.6,0 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0" />
+    <path
+        android:fillColor="#FF8A80"
+        android:pathData="M51.5,53 L56.5,53 L54,56 Z" />
+    <path
+        android:fillColor="#D93636"
+        android:pathData="M40,67 Q54,73 68,67 L68,72 Q54,78 40,72 Z" />
+    <path
+        android:fillColor="#FFD93D"
+        android:pathData="M65,80 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0" />
 </vector>
